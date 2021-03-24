@@ -13,12 +13,12 @@ __author__ = "Rohan Jakhar"
 
 
 class HuffmanCoding():
-    def __init__(self):  # done
+    def __init__(self):
         self.heap: list[HuffmanCoding.HeapLeafNode] = []
         self.codes: dict[str, str] = {}
         self.reverse_mapping: dict[str, str] = {}
 
-    class HeapLeafNode():  # done
+    class HeapLeafNode():
         def __init__(self, char: Optional[str], freq: int):
             self.char = char
             self.freq = freq
@@ -32,7 +32,7 @@ class HuffmanCoding():
         def __str__(self):
             return f"( {self.char}, {self.freq} )"
 
-    class HeapNode(HeapLeafNode):  # done
+    class HeapNode(HeapLeafNode):
         def __init__(self, freq: int, left_node, right_node):
             super().__init__(None, freq)
             self.left: HuffmanCoding.HeapLeafNode = left_node
@@ -41,7 +41,7 @@ class HuffmanCoding():
         def __str__(self):
             return f"( freq: {self.freq}, left: {self.left}, right: {self.right} )"
 
-    def make_tree(self):  # done
+    def make_tree(self):
         def make_heap(self: HuffmanCoding):
             count = Counter(self.text)
             for key in count.keys():
@@ -58,7 +58,7 @@ class HuffmanCoding():
         merge_nodes(self)
         self.huffman_tree = heapq.heappop(self.heap)
 
-    def make_codes(self):  # done
+    def make_codes(self):
         def helper(node, curr_code: str):
             if node.char is not None:
                 self.codes[node.char] = curr_code
@@ -69,7 +69,7 @@ class HuffmanCoding():
 
         helper(self.huffman_tree, "")
 
-    def encode_text(self):  # file handling work remaining, maybe
+    def encode_text(self):
         def pad(self: HuffmanCoding):
             pad_needed = 8 - len(self.encoded_text) % 8
             pad_info = f"{pad_needed:08b}"
@@ -115,13 +115,13 @@ class HuffmanCoding():
             handle.write(pickled)
             handle.write(self.eptext_bytes)
 
-    def read_compressed_file(self, path):  # done?
+    def read_compressed_file(self, path):
         absolue_path = os.path.abspath(path)
         with open(absolue_path, "rb") as cfhandle:
             base_name = os.path.basename(absolue_path)
             self.path, ext = os.path.splitext(base_name)
 
-            # can be using direct math  ## maybe???
+            # can be done using direct math
             tree_size_bin = ''.join(
                 [f"{byte:08b}" for byte in cfhandle.read(4)])
             tree_size = int(tree_size_bin, 2)
