@@ -3,7 +3,7 @@ from collections import Counter
 import os.path
 import heapq
 import pickle
-from typing import Optional, Type
+from typing import Optional
 import sys
 
 
