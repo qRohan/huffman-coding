@@ -6,6 +6,7 @@ import os.path
 import heapq
 import pickle
 import sys
+import argparse
 
 
 __author__ = "Rohan Jakhar"
@@ -170,17 +171,32 @@ class HuffmanCoding():
         self.create_uncompressed_file()
 
 
-if __name__ == "__main__":
+def main(file_name: str, encode: bool, decode: bool, verbose: bool, universal):
     x = HuffmanCoding()
-    file_name = sys.argv[-1]
-    method = sys.argv[-2]
-    method = method.lower()
-    if method == 'e' or method == 'encode':
+    if encode:
         x.encode(file_name)
-        print(f"Compression ratio: {x.uncompressed_size / x.compressed_size}")
+        if verbose:
+            print(f"Encoding {file_name}")
+            print(
+                f"Compression ratio: {x.uncompressed_size / x.compressed_size}")
 
-    elif method == 'd' or method == 'decode':
+    elif decode:
         x.decode(file_name)
+        if verbose:
+            print(f"Decoding {file_name}")
     else:
         print("Invalid method")
         sys.exit(0)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Huffman coding ")
+    parser.add_argument("--verbose", "-v", action="store_true")
+    parser.add_argument("--encode", "-e", action="store_true")
+    parser.add_argument("--decode", "-d", action="store_true")
+    parser.add_argument("file")
+    args = parser.parse_args()
+    args_dict = vars(args)
+    print(args_dict)
+    main(args_dict["file"], args_dict["encode"],
+         args_dict["decode"], args_dict["verbose"],False)
