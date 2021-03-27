@@ -127,9 +127,9 @@ class HuffmanCoding():
         self.compressed_size = os.path.getsize(file_name)
 
     def read_compressed_file(self, path: str):
-        absolue_path = os.path.abspath(path)
-        with open(absolue_path, "rb") as cfhandle:
-            base_name = os.path.basename(absolue_path)
+        absolute_path = os.path.abspath(path)
+        with open(absolute_path, "rb") as cfhandle:
+            base_name = os.path.basename(absolute_path)
             self.path: str = os.path.splitext(base_name)[0]
 
             # can be using direct math
@@ -145,11 +145,11 @@ class HuffmanCoding():
         self.encoded_padded_text = ''.join(bit_string_list)
 
     def read_uncompressed_file(self, path: str):
-        absolue_path: str = os.path.abspath(path)
-        self.uncompressed_size = os.path.getsize(absolue_path)
-        with open(absolue_path, 'r') as fhandle:
+        absolute_path: str = os.path.abspath(path)
+        self.uncompressed_size = os.path.getsize(absolute_path)
+        with open(absolute_path, 'r') as fhandle:
             self.text = fhandle.read()
-            base_name = os.path.basename(absolue_path)
+            base_name = os.path.basename(absolute_path)
             self.path, _ = os.path.splitext(base_name)
 
     def create_uncompressed_file(self):
