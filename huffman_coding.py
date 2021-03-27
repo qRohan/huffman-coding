@@ -144,44 +144,46 @@ class HuffmanCoding():
             bit_string_list = [f"{byte:08b}" for byte in cfhandle.read()]
         self.encoded_padded_text = ''.join(bit_string_list)
 
-    def read_uncompressed_file(self, path: str):
+    def read_uncompressed_file(self, path: str, universal_newline_disable: bool):
         absolute_path: str = os.path.abspath(path)
         self.uncompressed_size = os.path.getsize(absolute_path)
-        with open(absolute_path, 'r') as fhandle:
+        uninewline = "" if universal_newline_disable else None
+        with open(absolute_path, 'r', newline=uninewline) as fhandle:
             self.text = fhandle.read()
             base_name = os.path.basename(absolute_path)
             self.path, _ = os.path.splitext(base_name)
 
-    def create_uncompressed_file(self):
+    def create_uncompressed_file(self, universal_newline_disable: bool):
         file_name: str = self.path+"_uncompressed.txt"
-        with open(file_name, 'w') as fhandle:
+        uninewline = "" if universal_newline_disable else None
+        with open(file_name, 'w', newline=uninewline) as fhandle:
             fhandle.write(self.text)
 
-    def encode(self, path: str):
-        self.read_uncompressed_file(path)
+    def encode(self, path: str, universal_newline_disable: bool):
+        self.read_uncompressed_file(path, universal_newline_disable)
         self.make_tree()
         self.make_codes()
         self.encode_text()
         self.create_compressed_file()
 
-    def decode(self, path: str):
+    def decode(self, path: str, universal_newline_disable: bool):
         self.read_compressed_file(path)
         self.make_codes()
         self.decode_eptext()
-        self.create_uncompressed_file()
+        self.create_uncompressed_file(universal_newline_disable)
 
 
-def main(file_name: str, encode: bool, decode: bool, verbose: bool, universal):
+def main(file_name: str, encode: bool, decode: bool, verbose: bool, universal_newline_disable: bool):
     x = HuffmanCoding()
     if encode:
-        x.encode(file_name)
+        x.encode(file_name, universal_newline_disable)
         if verbose:
             print(f"Encoding {file_name}")
             print(
                 f"Compression ratio: {x.uncompressed_size / x.compressed_size}")
 
     elif decode:
-        x.decode(file_name)
+        x.decode(file_name, universal_newline_disable)
         if verbose:
             print(f"Decoding {file_name}")
     else:
@@ -194,9 +196,12 @@ if __name__ == "__main__":
     parser.add_argument("--verbose", "-v", action="store_true")
     parser.add_argument("--encode", "-e", action="store_true")
     parser.add_argument("--decode", "-d", action="store_true")
+    parser.add_argument("--universal-newline-disable",
+                        "-u", action="store_true")
     parser.add_argument("file")
     args = parser.parse_args()
     args_dict = vars(args)
     print(args_dict)
     main(args_dict["file"], args_dict["encode"],
-         args_dict["decode"], args_dict["verbose"],False)
+         args_dict["decode"], args_dict["verbose"],
+         args_dict["universal_newline_disable"])
