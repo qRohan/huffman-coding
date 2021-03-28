@@ -201,7 +201,6 @@ if __name__ == "__main__":
     parser.add_argument("file")
     args = parser.parse_args()
     args_dict = vars(args)
-    print(args_dict)
     main(args_dict["file"], args_dict["encode"],
          args_dict["decode"], args_dict["verbose"],
          args_dict["universal_newline_disable"])
