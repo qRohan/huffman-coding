@@ -119,7 +119,7 @@ class HuffmanCoding():
                     for index in range(0, 32, 8)]
         size_bytes = bytes(size_lst)
 
-        file_name: str = self.path+".bin"
+        file_name: str = self.fname_no_ext+".bin"
         with open(file_name, "wb+") as handle:
             handle.write(size_bytes)
             handle.write(pickled)
@@ -130,7 +130,7 @@ class HuffmanCoding():
         absolute_path = os.path.abspath(path)
         with open(absolute_path, "rb") as cfhandle:
             base_name = os.path.basename(absolute_path)
-            self.path: str = os.path.splitext(base_name)[0]
+            self.fname_no_ext: str = os.path.splitext(base_name)[0]
 
             # can be using direct math
             tree_size_bin = ''.join(
@@ -151,10 +151,10 @@ class HuffmanCoding():
         with open(absolute_path, 'r', newline=uninewline) as fhandle:
             self.text = fhandle.read()
             base_name = os.path.basename(absolute_path)
-            self.path, _ = os.path.splitext(base_name)
+            self.fname_no_ext, _ = os.path.splitext(base_name)
 
     def create_uncompressed_file(self, universal_newline_disable: bool):
-        file_name: str = self.path+"_uncompressed.txt"
+        file_name: str = self.fname_no_ext+"_uncompressed.txt"
         uninewline = "" if universal_newline_disable else None
         with open(file_name, 'w', newline=uninewline) as fhandle:
             fhandle.write(self.text)
