@@ -81,7 +81,7 @@ class HuffmanCoding():
 
     def encode_text(self):
         def pad(self: HuffmanCoding):
-            pad_needed = 8 - len(self.encoded_text) % 8
+            pad_needed = (8 - len(self.encoded_text) % 8) % 8
             pad_info = f"{pad_needed:08b}"
             self.encoded_padded_text = pad_info + self.encoded_text + "0"*pad_needed
 
