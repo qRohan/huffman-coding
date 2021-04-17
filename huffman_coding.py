@@ -194,8 +194,9 @@ def main(file_name: str, encode: bool, decode: bool, verbose: bool, universal_ne
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Huffman coding ")
     parser.add_argument("-v", "--verbose", action="store_true")
-    parser.add_argument("-e", "--encode", action="store_true")
-    parser.add_argument("-d", "--decode", action="store_true")
+    method = parser.add_mutually_exclusive_group(required = True)
+    method.add_argument("-e", "--encode", action="store_true")
+    method.add_argument("-d", "--decode", action="store_true")
     parser.add_argument("-u", "--universal-newline-disable",
                         action="store_true")
     parser.add_argument("file")
